@@ -8,8 +8,10 @@ app.get("/", (req, res) => {
 
 })
 const userRouter = require('./routes/users')
+const listRouter = require('./routes/lists')
 //calls the router with the default route of /users
 app.use('/users', userRouter)
+app.use('/lists', listRouter)
 app.listen(
     port,
     () => console.log(`app running on http://localhost:${port}`)

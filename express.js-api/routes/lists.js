@@ -1,16 +1,9 @@
 const express = require('express')
 const router = express.Router()
+let result
 
-const app = express()
-let users = [{
-    id: "1",
-    name: "test1"
-},
-{
-    id: "2",
-    name: "test2"
-}]
 var mysql = require('mysql');
+
 let con = mysql.createPool({
     host: "localhost",
     user: "root",
@@ -18,8 +11,18 @@ let con = mysql.createPool({
     database: "expressapi"
 })
 
+
+
+
+
+
+
+
+
+
+
 router.get('/', (req, res) => {
-    return res.send(Object.values(users));
+    // return res.send(Object.values(lists));
 
 
 })
@@ -27,8 +30,10 @@ router.get('/', (req, res) => {
 router
     .route("/:id")
     .get((req, res) => {
-        console.log(req.user)
-        con.query("SELECT * FROM users", function (err, result, fields) {
+        // con.connect(function (err) {
+        //     if (err) throw err;
+        //     console.log("Connected!");
+        con.query("SELECT * FROM lists", function (err, result, fields) {
             if (err) throw err;
             console.table(result);
             if (req.params.id < result.length) {
@@ -40,10 +45,6 @@ router
             }
 
         });
-
-
-
-        // `get user with ID ${ req.params.id } `
 
     })
     .put((req, res) => {
@@ -62,7 +63,6 @@ router
 //runs a function each time a route with the param :ID is called
 router.param("id", (req, res, next, id) => {
 
-    console.table(users)
     next()
 })
 
