@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
-
+const bodyParser = require("body-parser");
 const app = express()
+
+
 let users = [{
     id: "1",
     name: "test1"
@@ -11,6 +13,7 @@ let users = [{
     name: "test2"
 }]
 var mysql = require('mysql');
+
 let con = mysql.createPool({
     host: "localhost",
     user: "root",
@@ -19,7 +22,9 @@ let con = mysql.createPool({
 })
 
 router.get('/', (req, res) => {
-    return res.send(Object.values(users));
+
+
+    // return res.send(Object.values(users));
 
 
 })
@@ -27,7 +32,6 @@ router.get('/', (req, res) => {
 router
     .route("/:id")
     .get((req, res) => {
-        console.log(req.user)
         con.query("SELECT * FROM users", function (err, result, fields) {
             if (err) throw err;
             console.table(result);
@@ -36,36 +40,33 @@ router
             }
             else {
                 return res.send('ID out of range');
-
             }
-
         });
-
-
-
-        // `get user with ID ${ req.params.id } `
-
     })
     .put((req, res) => {
-
         res.send(`get user with ID ${req.params.id} `)
     })
-    .delete((req, res) => {
+router.post('/', async (req, res) => {
+    const { name } = req.body
+    con.query(`INSERT INTO users (User_id, name) VALUES (NULL, '${name}');`, function (err, result, fields) {
+        res.send(`created user with the name of ${name}`)
 
-        res.send(`get user with ID ${req.params.id} `)
-    })
+    });
 
 
 
-
-
-//runs a function each time a route with the param :ID is called
-router.param("id", (req, res, next, id) => {
-
-    console.table(users)
-    next()
+    //     res.send('response' + subscriber.name)
+    // } catch (err) {
+    //     res.send('error')
+    // }
 })
+    .delete((req, res) => {
+        res.send(`get user with ID ${req.params.id} `)
+    })
+//runs a function each time a route with the param :ID is called
+// router.param("id", (req, res, next, id) => {
 
-
-
+//     console.table(users)
+//     next()
+// })
 module.exports = router

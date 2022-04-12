@@ -1,31 +1,31 @@
-const mysql = require('mysql');
-
-const pool = mysql.createPool({
-
-    user: 'root',
-    password: '',
-    host: 'localhost',
-    database: 'expressapi',
-
-})
-let userdb = {};
-userdb.all = () => {
-
-
-
-    pool.query('select * from users', (err, results) => {
-
-        console.log(results);
-        return results;
-
-
-
-    });
-}
+// const express = require('express')
+// let mysql = require('mysql');
+// let con = mysql.createPool({
+//     host: "localhost",
+//     user: "root",
+//     password: "",
+//     database: "expressapi"
+// })
+// const router = express.Router()
 
 
 
 
+// console.log('db/index loaded')
 
 
-module.exports = userdb;
+// function getusers(req, id) {
+//     con.query("SELECT * FROM users", function (err, result, fields) {
+//         if (err) throw err;
+//         console.table(result);
+//         if (req.params.id < result.length) {
+//             return res.send(result[req.params.id]);
+//         }
+//         else {
+//             return res.send('ID out of range');
+//         }
+//     });
+// }
+
+
+// module.exports = usercontroller

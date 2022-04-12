@@ -26,10 +26,18 @@ router.get('/', (req, res) => {
 
 
 })
+router.post('/', async (req, res) => {
+    const { name } = req.body
+    con.query(`INSERT INTO lists (User_id, name) VALUES (NULL, '${name}');`, function (err, result, fields) {
+        res.send(`created user with the name of ${name}`)
 
+    });
+})
 router
+
     .route("/:id")
     .get((req, res) => {
+
         // con.connect(function (err) {
         //     if (err) throw err;
         //     console.log("Connected!");
